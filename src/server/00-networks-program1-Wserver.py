@@ -46,7 +46,7 @@ while True:
 		dec_msg_array = dec_msg.split() #[1]
 		filename = dec_msg_array[1][1:]
 
-		print(f'filename = ' + filename)
+		print('filename = ' + filename)
 
 		print('Client request: ' + filename)
 
