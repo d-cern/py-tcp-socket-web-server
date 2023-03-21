@@ -37,7 +37,7 @@ while True:
 
 		dec_msg = msg.decode(encoding='utf-8')
 
-		print(f'Decoded message: \n{dec_msg}')
+		print(f'Decoded message: \n' + dec_msg)
 
 		# browsers will send ACK that has no data, so trying to get filename will give index OoB
 		if dec_msg == '':
