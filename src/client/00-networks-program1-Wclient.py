@@ -2,8 +2,8 @@ from socket import * # Import socket module
 import sys, os, errno
 
 # Create a TCP server socket
-#(AF_INET is used for IPv4 protocols)
-#(SOCK_STREAM is used for TCP)
+# (AF_INET is used for IPv4 protocols)
+# (SOCK_STREAM is used for TCP)
 
 clientSocket = socket(AF_INET, SOCK_STREAM)
 
@@ -18,6 +18,12 @@ serverPort = int(sys.argv[2])
 fileName = sys.argv[3]
 
 # Connect to the server
+# socket.setsockopt(level, optname, value: int)
+# socket.setsockopt(level, optname, value: buffer)
+# socket.setsockopt(level, optname, None, optlen: int)
+
+
+
 try:
 	clientSocket.connect((serverAddr,serverPort))
 except error as e:
@@ -31,7 +37,8 @@ try:
 	getRequest = "GET /" + fileName + " HTTP/1.1\r\nHost: " + serverAddr + "\r\n"
 	getRequest = getRequest + "Accept: text/html\r\nConnection: keep-alive\r\n"
 	getRequest = getRequest + "User-agent: RoadRunner/1.0\r\n\r\n"
-	clientSocket.send(getRequest.encode()) 
+	print(getRequest)
+	clientSocket.send(getRequest.encode(encoding='ascii'))
 	# clientSocket.send(("GET /" + fileName + " HTTP/1.1\r\n").encode()) 
 	# clientSocket.send(("Host: " + serverAddr + "\r\n").encode())
 	# clientSocket.send("Accept: text/html\r\n".encode())
@@ -48,7 +55,7 @@ while True:
 		newPart = clientSocket.recv(1024)
 		message = message + newPart.decode()
 		if not newPart:
-			print (message, flush=True)
+			print(message, flush=True)
 			break
 		if message[len(message)-1] != "\n":
 			continue
