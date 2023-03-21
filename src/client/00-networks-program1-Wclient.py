@@ -21,8 +21,7 @@ fileName = sys.argv[3]
 # socket.setsockopt(level, optname, value: int)
 # socket.setsockopt(level, optname, value: buffer)
 # socket.setsockopt(level, optname, None, optlen: int)
-
-
+clientSocket.setsockopt(SOL_SOCKET, SO_RCVBUF, 100)
 
 try:
 	clientSocket.connect((serverAddr,serverPort))
