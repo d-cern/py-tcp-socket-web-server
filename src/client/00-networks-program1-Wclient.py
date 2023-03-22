@@ -52,7 +52,7 @@ message = ''
 while True:
 	try:
 		newPart = clientSocket.recv(16)
-		message = message + newPart.decode()
+		message = message + newPart.decode(encoding='utf-8')
 		if not newPart:
 			print(message, flush=True)
 			break
