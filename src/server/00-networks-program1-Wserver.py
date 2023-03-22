@@ -32,7 +32,7 @@ while True:
 		print('Ready to serve...')
 		(connectionSocket, addr) = serverSocket.accept()
 		print('Connection accepted')
-	#try:
+		#try:
 		msg = connectionSocket.recv(1024)
 
 		dec_msg = msg.decode(encoding='utf-8')
@@ -69,12 +69,16 @@ while True:
 		# Send the content of the requested file to the client
 		SEND_RATE = 664 # theoretical "max" send rate
 		i = 0
-		while i < len(outputdata): #for i in range(0, len(outputdata)):
-			if i+SEND_RATE >= len(outputdata):
-				connectionSocket.send(outputdata[i:].encode(encoding='utf-8'))
-			else:
-				connectionSocket.send(outputdata[i:i+SEND_RATE].encode(encoding='utf-8'))
+		try:
+			while i < len(outputdata): #for i in range(0, len(outputdata)):
+				if i+SEND_RATE >= len(outputdata):
+					connectionSocket.send(outputdata[i:].encode(encoding='utf-8'))
+				else:
+					connectionSocket.send(outputdata[i:i+SEND_RATE].encode(encoding='utf-8'))
 			i = i+SEND_RATE
+		except ConnectionResetError:
+			print('====BrokenPipeError====\nclient-side bug')
+			continue
 
 		connectionSocket.send("\r\n".encode(encoding='utf-8'))
 		connectionSocket.close()
@@ -86,9 +90,7 @@ while True:
 		# Send response message for file not found
 		print('404 - File requested not found\n')
 		connectionSocket.send( ('HTTP/1.1 404 Not Found\nContent-Type: text/html\n\n' +
-							    '<html><body><h1>404 Not Found</body></html>').encode(encoding='utf-8') )
+								'<html><body><h1>404 Not Found</body></html>').encode(encoding='utf-8') )
 		connectionSocket.close()
 		sys.exit()
-	except ConnectionResetError:
-		print('====BrokenPipeError====\nclient-side bug')
-		continue
+

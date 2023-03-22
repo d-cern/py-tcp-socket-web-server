@@ -51,7 +51,7 @@ except error as e:
 message = ''
 while True:
 	try:
-		newPart = clientSocket.recv(64)
+		newPart = clientSocket.recv(128)
 		message = message + newPart.decode(encoding='utf-8')
 		if not newPart:
 			print(message, flush=True)
