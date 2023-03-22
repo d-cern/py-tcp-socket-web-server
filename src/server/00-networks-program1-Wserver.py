@@ -67,7 +67,7 @@ while True:
 		connectionSocket.send(b'HTTP/1.1 200 OK\nContent-Type: text/html\n\n')
 
 		# Send the content of the requested file to the client
-		SEND_RATE = 664
+		SEND_RATE = 664 # theoretical "max" send rate
 		i = 0
 		while i < len(outputdata): #for i in range(0, len(outputdata)):
 			if i+SEND_RATE >= len(outputdata):

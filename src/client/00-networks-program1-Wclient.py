@@ -21,7 +21,7 @@ fileName = sys.argv[3]
 # socket.setsockopt(level, optname, value: int)
 # socket.setsockopt(level, optname, value: buffer)
 # socket.setsockopt(level, optname, None, optlen: int)
-clientSocket.setsockopt(SOL_SOCKET, SO_RCVBUF, 100)
+clientSocket.setsockopt(SOL_SOCKET, SO_RCVBUF, 240)
 
 try:
 	clientSocket.connect((serverAddr,serverPort))
@@ -51,7 +51,7 @@ except error as e:
 message = ''
 while True:
 	try:
-		newPart = clientSocket.recv(1024)
+		newPart = clientSocket.recv(16)
 		message = message + newPart.decode()
 		if not newPart:
 			print(message, flush=True)
