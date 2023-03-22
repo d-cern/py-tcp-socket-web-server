@@ -89,6 +89,6 @@ while True:
 							    '<html><body><h1>404 Not Found</body></html>').encode(encoding='utf-8') )
 		connectionSocket.close()
 		sys.exit()
-	except BrokenPipeError or ConnectionResetError:
+	except ConnectionResetError:
 		print('====BrokenPipeError====\nclient-side bug')
 		continue
