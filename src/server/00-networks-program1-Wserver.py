@@ -75,7 +75,7 @@ while True:
 					connectionSocket.send(outputdata[i:].encode(encoding='utf-8'))
 				else:
 					connectionSocket.send(outputdata[i:i+SEND_RATE].encode(encoding='utf-8'))
-			i = i+SEND_RATE
+				i = i+SEND_RATE
 		except ConnectionResetError:
 			print('====BrokenPipeError====\nclient-side bug')
 			continue
