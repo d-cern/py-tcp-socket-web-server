@@ -63,9 +63,11 @@ while True:
 		else:
 			print(message, flush=True)
 			message = ''
+	except KeyboardInterrupt:
+		print('Cancelling download...')
+		clientSocket.close()
+		sys.exit(0)
 	except error as e:
 		print('Error reading socket: ' + str(e))
+		clientSocket.close()
 		sys.exit(1)
-
-clientSocket.close()
-sys.exit(0) 
