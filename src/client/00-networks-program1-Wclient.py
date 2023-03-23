@@ -1,3 +1,4 @@
+import time
 from socket import * # Import socket module
 import sys, os, errno
 
@@ -21,7 +22,7 @@ fileName = sys.argv[3]
 # socket.setsockopt(level, optname, value: int)
 # socket.setsockopt(level, optname, value: buffer)
 # socket.setsockopt(level, optname, None, optlen: int)
-clientSocket.setsockopt(SOL_SOCKET, SO_RCVBUF, 240)
+clientSocket.setsockopt(SOL_SOCKET, SO_RCVBUF, 300)
 
 try:
 	clientSocket.connect((serverAddr,serverPort))
@@ -37,7 +38,7 @@ try:
 	getRequest = getRequest + 'Accept: text/html\r\nConnection: keep-alive\r\n'
 	getRequest = getRequest + 'User-agent: RoadRunner/1.0\r\n\r\n'
 	print(getRequest)
-	clientSocket.send(getRequest.encode(encoding='ascii'))
+	clientSocket.send(getRequest.encode(encoding='utf-8'))
 	# clientSocket.send(('GET /' + fileName + ' HTTP/1.1\r\n').encode()) 
 	# clientSocket.send(('Host: ' + serverAddr + '\r\n').encode())
 	# clientSocket.send('Accept: text/html\r\n'.encode())
@@ -51,8 +52,9 @@ except error as e:
 message = ''
 while True:
 	try:
-		newPart = clientSocket.recv(128)
-		message = message + newPart.decode(encoding='utf-8')
+		newPart = clientSocket.recv(1)
+		#time.sleep(0.5)
+		message = message + newPart.decode()
 		if not newPart:
 			print(message, flush=True)
 			break
@@ -65,5 +67,5 @@ while True:
 		print('Error reading socket: ' + str(e))
 		sys.exit(1)
 
-clientSocket.close()  
+clientSocket.close()
 sys.exit(0) 
