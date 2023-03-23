@@ -39,7 +39,7 @@ try:
 	getRequest = getRequest + 'User-agent: RoadRunner/1.0\r\n\r\n'
 	print(getRequest)
 	clientSocket.send(getRequest.encode(encoding='utf-8'))
-	# clientSocket.send(('GET /' + fileName + ' HTTP/1.1\r\n').encode()) 
+	# clientSocket.send(('GET /' + fileName + ' HTTP/1.1\r\n').encode())
 	# clientSocket.send(('Host: ' + serverAddr + '\r\n').encode())
 	# clientSocket.send('Accept: text/html\r\n'.encode())
 	# clientSocket.send('Connection: keep-alive\r\n'.encode())
@@ -66,7 +66,7 @@ while True:
 	except KeyboardInterrupt:
 		print('Cancelling download...')
 		clientSocket.close()
-		sys.exit(0)
+		sys.exit(1)
 	except error as e:
 		print('Error reading socket: ' + str(e))
 		clientSocket.close()
